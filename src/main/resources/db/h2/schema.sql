@@ -1,6 +1,8 @@
 DROP TABLE vet_specialties IF EXISTS;
+DROP TABLE vet_available_hour IF EXISTS;
 DROP TABLE vets IF EXISTS;
 DROP TABLE specialties IF EXISTS;
+DROP TABLE available_hour IF EXISTS;
 DROP TABLE visits IF EXISTS;
 DROP TABLE pets IF EXISTS;
 DROP TABLE types IF EXISTS;
@@ -26,6 +28,19 @@ CREATE TABLE vet_specialties (
 );
 ALTER TABLE vet_specialties ADD CONSTRAINT fk_vet_specialties_vets FOREIGN KEY (vet_id) REFERENCES vets (id);
 ALTER TABLE vet_specialties ADD CONSTRAINT fk_vet_specialties_specialties FOREIGN KEY (specialty_id) REFERENCES specialties (id);
+
+CREATE TABLE available_hour (
+  id   INTEGER IDENTITY PRIMARY KEY,
+  time_date DATETIME
+);
+CREATE INDEX available_hour_time ON available_hour (time_date);
+
+CREATE TABLE vet_available_hour (
+  vet_id       INTEGER NOT NULL,
+  available_hour_id INTEGER NOT NULL
+);
+ALTER TABLE vet_available_hour ADD CONSTRAINT fk_vet_available_hour_vets FOREIGN KEY (vet_id) REFERENCES vets (id);
+ALTER TABLE vet_available_hour ADD CONSTRAINT fk_vet_available_hour_hours FOREIGN KEY (available_hour_id) REFERENCES available_hour (id);
 
 CREATE TABLE types (
   id   INTEGER IDENTITY PRIMARY KEY,

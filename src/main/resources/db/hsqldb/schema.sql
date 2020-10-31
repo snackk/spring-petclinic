@@ -1,6 +1,8 @@
 DROP TABLE vet_specialties IF EXISTS;
+DROP TABLE vet_available_hour IF EXISTS;
 DROP TABLE vets IF EXISTS;
 DROP TABLE specialties IF EXISTS;
+DROP TABLE available_hour IF EXISTS;
 DROP TABLE visits IF EXISTS;
 DROP TABLE pets IF EXISTS;
 DROP TABLE types IF EXISTS;
@@ -33,7 +35,7 @@ CREATE TABLE available_hour (
 );
 CREATE INDEX available_hour_time ON available_hour (time_date);
 
-CREATE TABLE IF NOT EXISTS vet_available_hour (
+CREATE TABLE vet_available_hour (
   vet_id       INTEGER NOT NULL,
   available_hour_id INTEGER NOT NULL
 );
