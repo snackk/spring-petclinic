@@ -19,8 +19,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.BaseEntity;
@@ -37,21 +35,6 @@ public class AvailableHour extends BaseEntity implements Serializable {
 	@Column(name = "time_date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime timeDate;
-
-	@ManyToOne
-	@JoinColumn(name = "vet_id")
-	private Vet vet;
-
-	public AvailableHour() {
-	}
-
-	public Vet getVet() {
-		return vet;
-	}
-
-	public void setVet(Vet vet) {
-		this.vet = vet;
-	}
 
 	public LocalDateTime getTimeDate() {
 		return timeDate;

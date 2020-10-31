@@ -27,6 +27,19 @@ CREATE TABLE vet_specialties (
 ALTER TABLE vet_specialties ADD CONSTRAINT fk_vet_specialties_vets FOREIGN KEY (vet_id) REFERENCES vets (id);
 ALTER TABLE vet_specialties ADD CONSTRAINT fk_vet_specialties_specialties FOREIGN KEY (specialty_id) REFERENCES specialties (id);
 
+CREATE TABLE available_hour (
+  id   INTEGER IDENTITY PRIMARY KEY,
+  time_date DATETIME
+);
+CREATE INDEX available_hour_time ON available_hour (time_date);
+
+CREATE TABLE IF NOT EXISTS vet_available_hour (
+  vet_id       INTEGER NOT NULL,
+  available_hour_id INTEGER NOT NULL
+);
+ALTER TABLE vet_available_hour ADD CONSTRAINT fk_vet_available_hour_vets FOREIGN KEY (vet_id) REFERENCES vets (id);
+ALTER TABLE vet_available_hour ADD CONSTRAINT fk_vet_available_hour_hours FOREIGN KEY (available_hour_id) REFERENCES available_hour (id);
+
 CREATE TABLE types (
   id   INTEGER IDENTITY PRIMARY KEY,
   name VARCHAR(80)
@@ -64,11 +77,3 @@ CREATE TABLE visits (
 ALTER TABLE visits ADD CONSTRAINT fk_visits_pets FOREIGN KEY (pet_id) REFERENCES pets (id);
 ALTER TABLE visits ADD CONSTRAINT fk_vet_visits FOREIGN KEY (vet_id) REFERENCES vets (id);
 CREATE INDEX visits_pet_id ON visits (pet_id);
-
-CREATE TABLE available_hour (
-  id          INTEGER IDENTITY PRIMARY KEY,
-  vet_id      INTEGER NOT NULL,
-  time_date  TIMESTAMP
-);
-ALTER TABLE available_hour ADD CONSTRAINT fk_vet_available_hour FOREIGN KEY (vet_id) REFERENCES vets (id);
-CREATE INDEX available_hour_vet_id ON available_hour (vet_id);

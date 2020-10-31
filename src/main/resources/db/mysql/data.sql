@@ -15,6 +15,16 @@ INSERT IGNORE INTO vet_specialties VALUES (3, 3);
 INSERT IGNORE INTO vet_specialties VALUES (4, 2);
 INSERT IGNORE INTO vet_specialties VALUES (5, 1);
 
+INSERT IGNORE INTO available_hour VALUES (1, NOW() + INTERVAL 1 DAY);
+INSERT IGNORE INTO available_hour VALUES (2, NOW() + INTERVAL 2 DAY);
+
+INSERT IGNORE INTO vet_available_hour VALUES (1, 1);
+INSERT IGNORE INTO vet_available_hour VALUES (2, 2);
+INSERT IGNORE INTO vet_available_hour VALUES (3, 1);
+INSERT IGNORE INTO vet_available_hour VALUES (4, 2);
+INSERT IGNORE INTO vet_available_hour VALUES (5, 1);
+INSERT IGNORE INTO vet_available_hour VALUES (6, 2);
+
 INSERT IGNORE INTO types VALUES (1, 'cat');
 INSERT IGNORE INTO types VALUES (2, 'dog');
 INSERT IGNORE INTO types VALUES (3, 'lizard');

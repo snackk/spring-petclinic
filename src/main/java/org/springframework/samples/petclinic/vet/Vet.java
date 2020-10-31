@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -28,7 +27,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
-
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.samples.petclinic.model.Person;
@@ -47,8 +45,13 @@ public class Vet extends Person {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
-			inverseJoinColumns = @JoinColumn(name = "specialty_id"))
+		inverseJoinColumns = @JoinColumn(name = "specialty_id"))
 	private Set<Specialty> specialties;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "vet_available_hour", joinColumns = @JoinColumn(name = "vet_id"),
+		inverseJoinColumns = @JoinColumn(name = "available_hour_id"))
+	private Set<AvailableHour> availableHours;
 
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {
@@ -57,8 +60,19 @@ public class Vet extends Person {
 		return this.specialties;
 	}
 
+	protected Set<AvailableHour> getAvailableHoursInternal() {
+		if (this.availableHours == null) {
+			this.availableHours = new HashSet<>();
+		}
+		return this.availableHours;
+	}
+
 	protected void setSpecialtiesInternal(Set<Specialty> specialties) {
 		this.specialties = specialties;
+	}
+
+	protected void setAvailableHours(Set<AvailableHour> availableHours) {
+		this.availableHours = availableHours;
 	}
 
 	@XmlElement
@@ -68,12 +82,23 @@ public class Vet extends Person {
 		return Collections.unmodifiableList(sortedSpecs);
 	}
 
+	@XmlElement
+	public List<AvailableHour> getAvailableHours() {
+		List<AvailableHour> sortedSpecs = new ArrayList<>(getAvailableHoursInternal());
+		PropertyComparator.sort(sortedSpecs, new MutableSortDefinition("time_date", true, true));
+		return Collections.unmodifiableList(sortedSpecs);
+	}
+
 	public int getNrOfSpecialties() {
 		return getSpecialtiesInternal().size();
 	}
 
 	public void addSpecialty(Specialty specialty) {
 		getSpecialtiesInternal().add(specialty);
+	}
+
+	public void addAvailableHour(AvailableHour availableHour) {
+		getAvailableHoursInternal().add(availableHour);
 	}
 
 }

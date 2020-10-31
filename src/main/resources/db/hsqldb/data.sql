@@ -5,12 +5,15 @@ INSERT INTO vets VALUES (4, 'Rafael', 'Ortega');
 INSERT INTO vets VALUES (5, 'Henry', 'Stevens');
 INSERT INTO vets VALUES (6, 'Sharon', 'Jenkins');
 
-INSERT INTO available_hour VALUES (1, 1, '2018-10-23 14:00:00');
-INSERT INTO available_hour VALUES (2, 1, '2018-10-23 15:00:00');
-INSERT INTO available_hour VALUES (3, 1, '2018-10-23 16:00:00');
-INSERT INTO available_hour VALUES (4, 2, '2018-10-23 14:00:00');
-INSERT INTO available_hour VALUES (5, 2, '2018-10-23 15:00:00');
-INSERT INTO available_hour VALUES (6, 2, '2018-10-23 16:00:00');
+INSERT INTO available_hour VALUES (1, NOW() + INTERVAL 1 DAY);
+INSERT INTO available_hour VALUES (2, NOW() + INTERVAL 2 DAY);
+
+INSERT INTO vet_available_hour VALUES (1, 1);
+INSERT INTO vet_available_hour VALUES (2, 2);
+INSERT INTO vet_available_hour VALUES (3, 1);
+INSERT INTO vet_available_hour VALUES (4, 2);
+INSERT INTO vet_available_hour VALUES (5, 1);
+INSERT INTO vet_available_hour VALUES (6, 2);
 
 INSERT INTO specialties VALUES (1, 'radiology');
 INSERT INTO specialties VALUES (2, 'surgery');

@@ -24,6 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,6 +62,11 @@ class VetControllerTests {
 		radiology.setId(1);
 		radiology.setName("radiology");
 		helen.addSpecialty(radiology);
+		AvailableHour hour = new AvailableHour();
+		hour.setTimeDate(LocalDateTime.now());
+		hour.setId(1);
+		helen.addAvailableHour(hour);
+		james.addAvailableHour(hour);
 		given(this.vets.findAll()).willReturn(Lists.newArrayList(james, helen));
 	}
 

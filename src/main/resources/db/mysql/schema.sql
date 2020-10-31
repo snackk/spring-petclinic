@@ -19,6 +19,20 @@ CREATE TABLE IF NOT EXISTS vet_specialties (
   UNIQUE (vet_id,specialty_id)
 ) engine=InnoDB;
 
+CREATE TABLE IF NOT EXISTS available_hour (
+  id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  time_date DATETIME NOT NULL,
+  INDEX(time_date)
+) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS vet_available_hour (
+  vet_id INT(4) UNSIGNED NOT NULL,
+  available_hour_id INT(4) UNSIGNED NOT NULL,
+  FOREIGN KEY (vet_id) REFERENCES vets(id),
+  FOREIGN KEY (available_hour_id) REFERENCES available_hour(id),
+  UNIQUE (vet_id,available_hour_id)
+) engine=InnoDB;
+
 CREATE TABLE IF NOT EXISTS types (
   id INT(4) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(80),
