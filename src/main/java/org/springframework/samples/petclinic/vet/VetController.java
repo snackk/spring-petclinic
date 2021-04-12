@@ -32,14 +32,19 @@ class VetController {
 
 	private final VetRepository vets;
 
-	public VetController(VetRepository clinicService) {
+	private final VisitRepository visitRepository;
+
+	public VetController(VetRepository clinicService,
+		VisitRepository visitRepository) {
 		this.vets = clinicService;
+		this.visitRepository = visitRepository;
 	}
 
 	@GetMapping("/vets.html")
 	public String showVetList(Map<String, Object> model) {
 		// Here we are returning an object of type 'Vets' rather than a collection of Vet
 		// objects so it is simpler for Object-Xml mapping
+		visitRepository.updateVisit("CONAA", 7);
 		Vets vets = new Vets();
 		vets.getVetList().addAll(this.vets.findAll());
 		model.put("vets", vets);

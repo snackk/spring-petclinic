@@ -16,16 +16,20 @@
 
 package org.springframework.samples.petclinic;
 
+import com.frontier.api.annotation.processor.config.FrontierConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * PetClinic Spring Boot Application.
  *
  * @author Dave Syer
- *
  */
 @SpringBootApplication(proxyBeanMethods = false)
+@Configuration
+@Import({FrontierConfiguration.class})
 public class PetClinicApplication {
 
 	public static void main(String[] args) {

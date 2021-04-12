@@ -131,6 +131,11 @@
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>com.frontier.api</groupId>
+      <artifactId>annotation-processor</artifactId>
+      <version>1.0.53-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>

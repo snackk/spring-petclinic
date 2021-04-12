@@ -15,16 +15,17 @@
  */
 package org.springframework.samples.petclinic.visit;
 
+import com.frontier.api.annotation.processor.annotation.provider.FrontierProperties;
+import com.frontier.api.annotation.processor.annotation.provider.FrontierProviderRepository;
 import java.util.List;
-
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.Repository;
-import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 /**
- * Repository class for <code>Visit</code> domain objects All method names are compliant
- * with Spring Data naming conventions so this interface can easily be extended for Spring
- * Data. See:
+ * Repository class for <code>Visit</code> domain objects All method names are compliant with Spring
+ * Data naming conventions so this interface can easily be extended for Spring Data. See:
  * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
  *
  * @author Ken Krebs
@@ -32,15 +33,17 @@ import org.springframework.samples.petclinic.model.BaseEntity;
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface VisitRepository extends Repository<Visit, Integer> {
+@FrontierProviderRepository
+public interface VisitRepository extends CrudRepository<Visit, Integer> {
 
-	/**
-	 * Save a <code>Visit</code> to the data store, either inserting or updating it.
-	 * @param visit the <code>Visit</code> to save
-	 * @see BaseEntity#isNew
-	 */
-	void save(Visit visit) throws DataAccessException;
-
+	@FrontierProperties(guarantee = "synchronous")
 	List<Visit> findByPetId(Integer petId);
+
+	@FrontierProperties(guarantee = "asynchronous")
+	@FrontierCompensate
+	@Modifying
+	@Query(value =
+		"UPDATE visits v set v.description = :desc where v.pet_id = :id", nativeQuery = true)
+	void updateVisit(@Param(value = "desc") String description, @Param(value = "id") Integer petId);
 
 }
